@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url:  jdbc:mysql://localhost:3306/wolox_challenge?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    #url:  jdbc:mysql://localhost:3306/wolox_challenge #notebook-ubuntu
+    username: root
+    password: 
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      #naming:
+        #strategy: org.hibernate.cfg.ImprovedNaming.Strategy
+    properties:
+      dialect: org.hibernate.dialect.MySQL5Dialect    
+        

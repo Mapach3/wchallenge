@@ -1,18 +1,18 @@
 package com.gcontento.wchallenge.models;
 
-public class Address {
+public class AddressModel {
 	
 	private String street;
 	private String suite;
 	private String city;
 	private String zipcode;
-	private Geo geo;
+	private GeoModel geo;
 	
 	
-	public Address(){}
+	public AddressModel(){}
 
 
-	public Address(String street, String suite, String city, String zipcode, Geo geo) {
+	public AddressModel(String street, String suite, String city, String zipcode, GeoModel geo) {
 		super();
 		this.street = street;
 		this.suite = suite;
@@ -62,12 +62,12 @@ public class Address {
 	}
 
 
-	public Geo getGeo() {
+	public GeoModel getGeo() {
 		return geo;
 	}
 
 
-	public void setGeo(Geo geo) {
+	public void setGeo(GeoModel geo) {
 		this.geo = geo;
 	}
 	

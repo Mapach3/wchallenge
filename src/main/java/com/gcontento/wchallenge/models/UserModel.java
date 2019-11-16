@@ -9,10 +9,10 @@ public class UserModel {
 		private String name;
 		private String username;
 		private String email;
-		private Address address;
+		private AddressModel address;
 		private String phone;
 		private String website;
-		private Company company;
+		private CompanyModel company;
 			
 
 		public UserModel() {
@@ -51,11 +51,11 @@ public class UserModel {
 			this.email = email;
 		}
 
-		public Address getAddress() {
+		public AddressModel getAddress() {
 			return address;
 		}
 
-		public void setAddress(Address address) {
+		public void setAddress(AddressModel address) {
 			this.address = address;
 		}
 
@@ -75,11 +75,11 @@ public class UserModel {
 			this.website = website;
 		}
 
-		public Company getCompany() {
+		public CompanyModel getCompany() {
 			return company;
 		}
 
-		public void setCompany(Company company) {
+		public void setCompany(CompanyModel company) {
 			this.company = company;
 		}
 		

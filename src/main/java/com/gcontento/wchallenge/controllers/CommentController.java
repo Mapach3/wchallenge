@@ -1,8 +1,10 @@
 package com.gcontento.wchallenge.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.websocket.server.PathParam;
 
-import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.gcontento.wchallenge.helpers.ConstantHelper;
 import com.gcontento.wchallenge.models.CommentModel;
 import com.gcontento.wchallenge.models.PostModel;
+import com.gcontento.wchallenge.models.UserModel;
 
 @RestController
 @RequestMapping("/v1")
@@ -34,24 +37,69 @@ public class CommentController {
 		return comment;
 	}
 	
-	@GetMapping("/commentsFiltered")
-	public CommentModel[] getCommentsFiltered(@PathParam("name") String name, @PathParam("userId") long userId) {
-		RestTemplate restTemplate = new RestTemplate();
-		CommentModel[] comments = {};
-		if (name != null) {
-			ResponseEntity<CommentModel[]> response = restTemplate
-					.getForEntity(ConstantHelper.COMMENTS_API_URL + "?name=" + name, CommentModel[].class);
-			comments = response.getBody();
-			return comments;
-//		} else {
-//			ResponseEntity<PostModel[]> response = restTemplate
-//					.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + userId, PostModel[].class);
-//			PostModel[] posts = response.getBody();
-//			for (PostModel post : posts) {				
-//			}
-		}
-		return comments; //Empty array in case of no name or no user given.
-	}
 
+	
+	@GetMapping("/commentsFiltered")
+	public List<CommentModel[]> getCommentsFiltered(@PathParam("name") String name, @PathParam("userId") Long userId) {
+		RestTemplate restTemplate = new RestTemplate();
+		PostModel[] posts;
+		List<CommentModel[]> comments = new ArrayList<CommentModel[]>();
+
+		if (name != null) {
+			UserModel user = restTemplate.getForObject(ConstantHelper.USERS_API_URL + "?name=" + name, UserModel.class);
+			ResponseEntity<PostModel[]> responsePosts = restTemplate
+					.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + user.getId(), PostModel[].class);
+			posts = responsePosts.getBody();
+			for (PostModel post : posts) {
+				ResponseEntity<CommentModel[]> responseComments = restTemplate.getForEntity(
+						ConstantHelper.COMMENTS_API_URL + "?postId=" + post.getId(), CommentModel[].class);
+				comments.add(responseComments.getBody());
+			}
+			return comments;
+		} else if (userId != null) {
+			ResponseEntity<PostModel[]> response = restTemplate
+				.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + userId.longValue(), PostModel[].class);
+			 posts = response.getBody();
+			for (PostModel post : posts) {
+				ResponseEntity<CommentModel[]> responseComments = restTemplate.getForEntity(
+						ConstantHelper.COMMENTS_API_URL + "?postId=" + post.getId(), CommentModel[].class);
+				comments.add(responseComments.getBody());
+			}
+			return comments;
+		}
+		return comments;
+	}
+	
+	/*First implementation of commentsFiltered. Not what was asked.*/
+//	@GetMapping("/commentsFiltered")
+//	public List<CommentModel[]> getCommentsFilteredFirst(@PathParam("name") String name,
+//			@PathParam("userId") Long userId) {
+//		RestTemplate restTemplate = new RestTemplate();
+//		List<CommentModel[]> comments = new ArrayList<CommentModel[]>();
+//		if (name != null) {
+//			ResponseEntity<CommentModel[]> response = restTemplate
+//					.getForEntity(ConstantHelper.COMMENTS_API_URL + "?name=" + name, CommentModel[].class);
+//			comments.add(response.getBody());
+//			return comments;
+//		} else {
+//			if (userId != null) {
+//				ResponseEntity<PostModel[]> response = restTemplate
+//						.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + userId.longValue(), PostModel[].class);
+//				PostModel[] posts = response.getBody();
+//				for (PostModel post : posts) {
+//					// TODO: Implement this part of method.
+//					ResponseEntity<CommentModel[]> responseComments = restTemplate.getForEntity(
+//							ConstantHelper.COMMENTS_API_URL + "?postId=" + post.getId(), CommentModel[].class);
+//					comments.add(responseComments.getBody());
+//				}
+//				return comments;
+//			}
+//
+//		}
+//		return comments; // Empty array in case of no name or no user given.
+//	}
+	
 
 }
+	
+	

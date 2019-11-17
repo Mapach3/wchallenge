@@ -50,7 +50,7 @@ public class PhotoController {
 		//first request: get all albums that have the given userId.
 		ResponseEntity<AlbumExternalModel[]> responseAlbums = restTemplate.getForEntity(ConstantHelper.ALBUMS_API_URL+"?userId="+userId, AlbumExternalModel[].class);
 		albums = responseAlbums.getBody();
-		//second request: 
+		//second request: take each album and fetch all photos, since api allows for nested resource search.
 		for (AlbumExternalModel album : albums){
 			ResponseEntity<PhotoModel[]> responsePhoto = restTemplate.getForEntity(ConstantHelper.PHOTOS_API_URL+"?albumId="+album.getId(),PhotoModel[].class);
 			photos.add(responsePhoto.getBody());

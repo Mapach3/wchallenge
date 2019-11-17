@@ -14,6 +14,8 @@ import com.gcontento.wchallenge.models.AlbumExternalModel;
 @RequestMapping("/v1")
 public class AlbumExternalController {
 	
+	/**GET request to the external service to fetch all Albums */
+	/** Using Array since deserialization of JSON fails when trying to return a List of UserModel. */
 	@GetMapping("/albums")
 	public AlbumExternalModel[] getAllAlbumExternal() {
 		RestTemplate restTemplate = new RestTemplate();
@@ -22,7 +24,7 @@ public class AlbumExternalController {
 		return albumExternal;
 	}
 	
-	
+	/**GET request to the external service to fetch a specific Album*/	
 	@GetMapping("/albums/{id}")
 	public AlbumExternalModel getAllbumExternalById(@PathVariable("id") long id) {
 		RestTemplate restTemplate = new RestTemplate();

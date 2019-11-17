@@ -55,13 +55,7 @@ public class PhotoController {
 			ResponseEntity<PhotoModel[]> responsePhoto = restTemplate.getForEntity(ConstantHelper.PHOTOS_API_URL+"?albumId="+album.getId(),PhotoModel[].class);
 			photos.add(responsePhoto.getBody());
 		}
-		
 		return photos;
-		
-		
-		
-		
-		
 	}
 	
 

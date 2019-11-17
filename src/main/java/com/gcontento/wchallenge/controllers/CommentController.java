@@ -21,6 +21,8 @@ import com.gcontento.wchallenge.models.UserModel;
 @RequestMapping("/v1")
 public class CommentController {
 
+	
+	/**GET request to the external service to fetch all Comments */
 	@GetMapping("/comments")
 	public CommentModel[] getAllComments() {
 		RestTemplate restTemplate = new RestTemplate();
@@ -29,7 +31,8 @@ public class CommentController {
 		CommentModel[] comments = response.getBody();
 		return comments;
 	}
-
+	
+	/**GET request to the external service to fetch a specific Comment */	
 	@GetMapping("/comments/{id}")
 	public CommentModel getCommentById(@PathVariable("id") long id) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
@@ -38,7 +41,7 @@ public class CommentController {
 	}
 	
 
-	
+	/*GET Request to the external service to get a comment based on the userId or the name of the user sent as parameter */
 	@GetMapping("/commentsFiltered")
 	public List<CommentModel[]> getCommentsFiltered(@PathParam("name") String name, @PathParam("userId") Long userId) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -87,7 +90,6 @@ public class CommentController {
 //						.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + userId.longValue(), PostModel[].class);
 //				PostModel[] posts = response.getBody();
 //				for (PostModel post : posts) {
-//					// TODO: Implement this part of method.
 //					ResponseEntity<CommentModel[]> responseComments = restTemplate.getForEntity(
 //							ConstantHelper.COMMENTS_API_URL + "?postId=" + post.getId(), CommentModel[].class);
 //					comments.add(responseComments.getBody());

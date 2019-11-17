@@ -43,23 +43,15 @@ public class CommentController {
 					.getForEntity(ConstantHelper.COMMENTS_API_URL + "?name=" + name, CommentModel[].class);
 			comments = response.getBody();
 			return comments;
-		} else {
-			ResponseEntity<PostModel[]> response = restTemplate
-					.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + userId, PostModel[].class);
-			PostModel[] posts = response.getBody();
-			for (PostModel post : posts) {				
-			}
+//		} else {
+//			ResponseEntity<PostModel[]> response = restTemplate
+//					.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + userId, PostModel[].class);
+//			PostModel[] posts = response.getBody();
+//			for (PostModel post : posts) {				
+//			}
 		}
 		return comments; //Empty array in case of no name or no user given.
 	}
 
-//	@GetMapping("/commentsFiltered")
-//	public PostModel[] getCommentsFilteredByUserId(@PathParam("userId") long userId) {
-//		RestTemplate restTemplate = new RestTemplate();
-//		ResponseEntity<PostModel[]> response = restTemplate
-//				.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + userId, PostModel[].class);
-//		return response.getBody();
-//
-//	}
 
 }

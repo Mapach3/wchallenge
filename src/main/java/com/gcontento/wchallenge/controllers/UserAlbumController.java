@@ -4,6 +4,7 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +25,9 @@ public class UserAlbumController {
 	
 	
 	
-	/*PUT Request to assign an album to an user (insert in userAlbum table)*/
+	/*POST Request to assign an album to an user (insert in userAlbum table)*/
 	/*Request returns true if saved, false otherwise.*/
-	@PutMapping("/addUserAlbum")
+	@PostMapping("/addUserAlbum")
 	public boolean addUserAlbum(@PathParam("userId") long userId,@PathParam("albumId") long albumId,@PathParam("permissionTypeId") long permissionTypeId) {
 		RestTemplate restTemplate = new RestTemplate();
 		UserModel user = restTemplate.getForObject(ConstantHelper.USERS_API_URL+userId, UserModel.class);

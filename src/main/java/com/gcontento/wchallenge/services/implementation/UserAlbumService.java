@@ -79,10 +79,24 @@ public class UserAlbumService implements IUserAlbumService {
 		return false;
 	}
 	
-	/**/
+	/*Updates the permission for an user in a respective AlbumUser*/
 	@Override
 	public boolean updateUserPermission(AlbumExternalModel album, UserModel user, long permissionTypeId) {
-		//AlbumUser will only be updated if it is present on database
+		// AlbumUser will only be updated if it is present on database.
+		if (this.userAlbumExists(user.getId(), album.getId())) {
+			// If the permission type IS DIFFERENT from the one the user already has, I update the AlbumUser.
+			//otherwise i dont do anything.
+			if (!userAlbumRepository.findByUser_idUserApiAndAlbum_idAlbumApi(user.getId(), album.getId())
+					.getPermissionType().equals(PermissionType.getId(permissionTypeId))) {
+
+				User savedUser = userRepository.findByIdUserApi(user.getId());
+				Album savedAlbum = albumRepository.findByIdAlbumApi(album.getId());
+				UserAlbum userAlbum = new UserAlbum(savedUser, savedAlbum, PermissionType.getId(permissionTypeId));
+				userAlbumRepository.save(userAlbum);
+				return true;
+			}
+
+		}
 		return false;
 	}
 	

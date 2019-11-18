@@ -2,11 +2,9 @@ package com.gcontento.wchallenge.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -15,10 +13,14 @@ import javax.persistence.Table;
 @Entity
 public class User {
 	
-	@GeneratedValue
+	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idUser")
 	private long id;
+	
+	@Column(name="apiUserId")
+	private long idUserApi;
 	
 	@Column(name="name")
 	private String name;
@@ -29,37 +31,26 @@ public class User {
 	@Column(name="email")
 	private String email;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="idAddress", nullable=false)
-	private Address address;
-	
 	@Column(name="phone")
 	private String phone;
 	
 	@Column(name="website")
 	private String website;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="idCompany", nullable=false)
-	private Company company;
+	public User() {}
 	
 	
-	public User() {
-	}
 
-
-	public User(long id, String name, String username, String email, Address address, String phone, String website,
-			Company company) {
+	public User(long idUserApi, String name, String username, String email, String phone, String website) {
 		super();
-		this.id = id;
+		this.idUserApi = idUserApi;
 		this.name = name;
 		this.username = username;
 		this.email = email;
-		this.address = address;
 		this.phone = phone;
 		this.website = website;
-		this.company = company;
 	}
+
 
 
 	public long getId() {
@@ -67,9 +58,23 @@ public class User {
 	}
 
 
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
+
+
+	public long getIdUserApi() {
+		return idUserApi;
+	}
+
+
+
+	public void setIdUserApi(long idUserApi) {
+		this.idUserApi = idUserApi;
+	}
+
 
 
 	public String getName() {
@@ -77,9 +82,11 @@ public class User {
 	}
 
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 
 	public String getUsername() {
@@ -87,9 +94,11 @@ public class User {
 	}
 
 
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 
 
 	public String getEmail() {
@@ -97,19 +106,11 @@ public class User {
 	}
 
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-
-	public Address getAddress() {
-		return address;
-	}
-
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 
 
 	public String getPhone() {
@@ -117,9 +118,11 @@ public class User {
 	}
 
 
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 
 
 	public String getWebsite() {
@@ -127,23 +130,17 @@ public class User {
 	}
 
 
+
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-
-
-	public Company getCompany() {
-		return company;
-	}
-
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
 	
 	
 	
 	
+
+
+
 	
 	
 

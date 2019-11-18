@@ -10,7 +10,7 @@ public enum PermissionType {
 		this.id = id;
 	}
 	
-	
+	//Method needed to transform the permissionType long value in its respective PermissionType value.
 	public static PermissionType getId(long id) {
 		for (PermissionType permType : values()) {
 			if (permType.id == id) {

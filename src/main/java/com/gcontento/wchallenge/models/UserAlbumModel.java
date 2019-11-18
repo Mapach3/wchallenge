@@ -1,44 +1,25 @@
-package com.gcontento.wchallenge.entities;
+package com.gcontento.wchallenge.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
+import com.gcontento.wchallenge.entities.Album;
+import com.gcontento.wchallenge.entities.PermissionType;
+import com.gcontento.wchallenge.entities.User;
 
-@Table(name="UserAlbum")
-@Entity
-public class UserAlbum {
+public class UserAlbumModel {
 	
-	
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idUserAlbum")
 	private long id;
 	
-	@Enumerated(EnumType.STRING)
 	private PermissionType permissionType;
 	
-	@ManyToOne
-	@JoinColumn(nullable=false)
 	private User user;
 	
-	@ManyToOne
-	@JoinColumn(nullable=false)
 	private Album album;
 
-	public UserAlbum() {
-	}
-
-	
-	public UserAlbum(User user, Album album,PermissionType permissionType) {
+	public UserAlbumModel(long id, PermissionType permissionType, User user, Album album) {
+		super();
+		this.id = id;
 		this.permissionType = permissionType;
 		this.user = user;
 		this.album = album;
@@ -75,7 +56,6 @@ public class UserAlbum {
 	public void setAlbum(Album album) {
 		this.album = album;
 	}
-	
 	
 	
 	

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -16,26 +17,31 @@ import javax.persistence.Table;
 @Table(name="album")
 public class Album {
 	
-	@GeneratedValue
+	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idAlbum")
 	private long id;
 	
 	@Column(name="ownerId")
 	private long ownerId;
 	
+	@Column(name="apiAlbumId")
+	private long idAlbumApi;
+	
 	@Column(name="title")
 	private String title;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="album")
 	private Set<Photo> photos = new HashSet<Photo>();
-	
-	public Album() {}
 
-	public Album(long id, long ownerId, String title) {
+	public Album() {
 		super();
-		this.id = id;
+	}
+
+	public Album(long ownerId, long idAlbumApi, String title) {
 		this.ownerId = ownerId;
+		this.idAlbumApi = idAlbumApi;
 		this.title = title;
 	}
 
@@ -55,6 +61,14 @@ public class Album {
 		this.ownerId = ownerId;
 	}
 
+	public long getIdAlbumApi() {
+		return idAlbumApi;
+	}
+
+	public void setIdAlbum(long idAlbumApi) {
+		this.idAlbumApi = idAlbumApi;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -70,6 +84,7 @@ public class Album {
 	public void setPhotos(Set<Photo> photos) {
 		this.photos = photos;
 	}
+	
 	
 	
 	

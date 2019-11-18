@@ -18,6 +18,34 @@ public class UserModel {
 		public UserModel() {
 			super();
 		}
+			
+
+		public UserModel(long id, String name, String username, String email, AddressModel address, String phone,
+				String website, CompanyModel company) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.username = username;
+			this.email = email;
+			this.address = address;
+			this.phone = phone;
+			this.website = website;
+			this.company = company;
+		}
+		
+		public UserModel(long id, String name, String username, String email, String phone,
+				String website) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.username = username;
+			this.email = email;
+			this.address = null;
+			this.phone = phone;
+			this.website = website;
+			this.company = null;
+		}
+
 
 		public long getId() {
 			return id;

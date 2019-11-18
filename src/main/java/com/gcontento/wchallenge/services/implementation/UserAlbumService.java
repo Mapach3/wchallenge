@@ -46,13 +46,14 @@ public class UserAlbumService implements IUserAlbumService {
 	public List<UserAlbum> getAll() {
 		return userAlbumRepository.findAll();
 	}
-
+	
+	/*Creates an AlbumUser, which associates an User (with the exception of the owner) with a permission on the Album*/
 	@Override
 	public boolean insertAlbumUser(AlbumExternalModel album, UserModel user, long permissionTypeId) {
 
 		// creating AlbumUser will only be allowed if the album isnt owned by the user AND
 		// if the album isnt already shared with a specific permisison.
-		if (album.getOwnerId() != user.getId() && !this.userAlbumExists(user.getId(),album.getId(),permissionTypeId)) {
+		if (album.getOwnerId() != user.getId() && !this.userAlbumExists(user.getId(),album.getId())) {
 
 			User savedUser = new User();
 			Album savedAlbum = new Album();
@@ -77,6 +78,14 @@ public class UserAlbumService implements IUserAlbumService {
 		}
 		return false;
 	}
+	
+	/**/
+	@Override
+	public boolean updateUserPermission(AlbumExternalModel album, UserModel user, long permissionTypeId) {
+		//AlbumUser will only be updated if it is present on database
+		return false;
+	}
+	
 
 	/*Determines if an User is already present on database, to avoid repeating registers.*/
 	@Override
@@ -100,12 +109,14 @@ public class UserAlbumService implements IUserAlbumService {
 
 	/*Determines if there is already an album shared with an user with a specific permission. */
 	@Override
-	public boolean userAlbumExists(long userId, long albumId, long permissionTypeId) {
+	public boolean userAlbumExists(long userId, long albumId) {
 		boolean found = false;
-		if (userAlbumRepository.findByUser_idUserApiAndAlbum_idAlbumApiAndPermissionType(userId, albumId,PermissionType.getId(permissionTypeId)) != null) {
+		if (userAlbumRepository.findByUser_idUserApiAndAlbum_idAlbumApi(userId, albumId) != null) {
 			found = true;
 		}
 		return found;
 	}
+
+	
 
 }

@@ -14,10 +14,12 @@ public interface IUserAlbumService {
 	/*Shares album with User*/
 	public boolean insertAlbumUser(AlbumExternalModel album, UserModel user, long permissionTypeId);
 	
+	public boolean updateUserPermission(AlbumExternalModel album, UserModel user, long permissionTypeId);
+	
 	public boolean userExists(long userIdApi);
 	
 	public boolean albumExists(long albumIdApi);
 	
-	public boolean userAlbumExists(long userId,long albumId, long permissionTypeId);
+	public boolean userAlbumExists(long userId,long albumId);
 
 }

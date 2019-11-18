@@ -25,12 +25,24 @@ public class UserAlbumController {
 	
 	
 	/*PUT Request to assign an album to an user (insert in userAlbum table)*/
+	/*Request returns true if saved, false otherwise.*/
 	@PutMapping("/addUserAlbum")
 	public boolean addUserAlbum(@PathParam("userId") long userId,@PathParam("albumId") long albumId,@PathParam("permissionTypeId") long permissionTypeId) {
 		RestTemplate restTemplate = new RestTemplate();
 		UserModel user = restTemplate.getForObject(ConstantHelper.USERS_API_URL+userId, UserModel.class);
 		AlbumExternalModel album = restTemplate.getForObject(ConstantHelper.ALBUMS_API_URL+albumId, AlbumExternalModel.class);
 		return userAlbumService.insertAlbumUser(album, user, permissionTypeId);
+	}
+	
+	
+	/*PUT Request to update the permission of an user in an album*/
+	/*Returns true if a change is made, false oterhwise*/
+	@PutMapping("/updatePermission")
+	public boolean updatePermission(@PathParam("userId") long userId,@PathParam("albumId") long albumId, @PathParam("permissionTypeId") long permissionTypeId) {
+		RestTemplate restTemplate = new RestTemplate();
+		UserModel user = restTemplate.getForObject(ConstantHelper.USERS_API_URL+userId, UserModel.class);
+		AlbumExternalModel album = restTemplate.getForObject(ConstantHelper.ALBUMS_API_URL+albumId, AlbumExternalModel.class);
+		return userAlbumService.updateUserPermission(album, user, permissionTypeId);
 	}
 	
 	

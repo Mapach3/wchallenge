@@ -14,7 +14,7 @@ public interface IUserAlbumRepository extends JpaRepository<UserAlbum, Serializa
 	
 	public UserAlbum findById(long id);
 	
-	public UserAlbum findByUser_idUserApiAndAlbum_idAlbumApiAndPermissionType(long idUserApi, long idAlbumApi, PermissionType permissionType);
+	public UserAlbum findByUser_idUserApiAndAlbum_idAlbumApi(long idUserApi, long idAlbumApi);
 	
 	public List<UserAlbum> findAll();
 	

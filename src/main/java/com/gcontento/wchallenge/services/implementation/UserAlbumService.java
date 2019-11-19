@@ -86,13 +86,10 @@ public class UserAlbumService implements IUserAlbumService {
 		if (this.userAlbumExists(user.getId(), album.getId())) {
 			// If the permission type IS DIFFERENT from the one the user already has, I update the AlbumUser.
 			//otherwise i dont do anything.
-			if (!userAlbumRepository.findByUser_idUserApiAndAlbum_idAlbumApi(user.getId(), album.getId())
-					.getPermissionType().equals(PermissionType.getId(permissionTypeId))) {
-
-				User savedUser = userRepository.findByIdUserApi(user.getId());
-				Album savedAlbum = albumRepository.findByIdAlbumApi(album.getId());
-				UserAlbum userAlbum = new UserAlbum(savedUser, savedAlbum, PermissionType.getId(permissionTypeId));
-				userAlbumRepository.save(userAlbum);
+			UserAlbum userAlbumToUpdate = userAlbumRepository.findByUser_idUserApiAndAlbum_idAlbumApi(user.getId(), album.getId());
+			if (!userAlbumToUpdate.getPermissionType().equals(PermissionType.getId(permissionTypeId)) ) {
+				userAlbumToUpdate.setPermissionType(PermissionType.getId(permissionTypeId));
+				userAlbumRepository.save(userAlbumToUpdate);
 				return true;
 			}
 
@@ -104,11 +101,11 @@ public class UserAlbumService implements IUserAlbumService {
 	/*Determines if an User is already present on database, to avoid repeating registers.*/
 	@Override
 	public boolean userExists(long userIdApi) {
-		boolean result = false;
+		boolean found = false;
 		if (userRepository.findByIdUserApi(userIdApi) != null) {
-			result = true;
+			found = true;
 		}
-		return result;
+		return found;
 	}
 
 	/*Determines if an Album is already present on database, to avoid repeating registers.*/
@@ -121,7 +118,7 @@ public class UserAlbumService implements IUserAlbumService {
 		return found;
 	}
 
-	/*Determines if there is already an album shared with an user with a specific permission. */
+	/*Determines if there is already an album shared with an user. */
 	@Override
 	public boolean userAlbumExists(long userId, long albumId) {
 		boolean found = false;

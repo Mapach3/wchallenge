@@ -1,5 +1,6 @@
 package com.gcontento.wchallenge.controllers;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ import com.gcontento.wchallenge.models.AlbumExternalModel;
 public class AlbumExternalController {
 	
 	/**GET request to the external service to fetch all Albums */
-	/** Using Array since deserialization of JSON fails when trying to return a List of UserModel. */
+	/** Using Array since deserialization of JSON fails when trying to return a List of AlbumExternalModel. */
 	@GetMapping("/albums")
 	public AlbumExternalModel[] getAllAlbumExternal() {
 		RestTemplate restTemplate = new RestTemplate();
@@ -23,6 +24,18 @@ public class AlbumExternalController {
 		AlbumExternalModel[] albumExternal = response.getBody();
 		return albumExternal;
 	}
+	
+	
+	/*GET request to the external service to return all albums of a specific user, sent by parameter*/
+	@GetMapping("/albumsOfUser")
+	public AlbumExternalModel[] getAlbumExternalOfUser(@Param("userId") long userId) {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<AlbumExternalModel[]> response = restTemplate.getForEntity(ConstantHelper.ALBUMS_API_URL+"?userId="+userId, AlbumExternalModel[].class);
+		AlbumExternalModel[] albumExternal = response.getBody();
+		return albumExternal;
+	}
+	
+	
 	
 	/**GET request to the external service to fetch a specific Album*/	
 	@GetMapping("/albums/{id}")

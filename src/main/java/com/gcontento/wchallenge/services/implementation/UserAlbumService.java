@@ -97,7 +97,15 @@ public class UserAlbumService implements IUserAlbumService {
 		return false;
 	}
 	
-
+	@Override
+	/*Find all users that have a specific permission in an album*/
+	public User[] getUsersByAlbumAndPermissionType(long albumId, long permissionTypeId) {
+		PermissionType permissionType = PermissionType.getId(permissionTypeId);
+		return userRepository.findByAlbumIdAndPermissionType(albumId, permissionType);
+		
+	}
+	
+	
 	/*Determines if an User is already present on database, to avoid repeating registers.*/
 	@Override
 	public boolean userExists(long userIdApi) {

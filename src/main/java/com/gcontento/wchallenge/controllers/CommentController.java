@@ -49,7 +49,7 @@ public class CommentController {
 		List<CommentModel[]> comments = new ArrayList<CommentModel[]>();
 
 		if (name != null) {
-			UserModel user = restTemplate.getForObject(ConstantHelper.USERS_API_URL + "?name=" + name, UserModel.class);
+			UserModel user = restTemplate.getForObject(ConstantHelper.USERS_API_URL+"?name="+name.toString(), UserModel.class);
 			ResponseEntity<PostModel[]> responsePosts = restTemplate
 					.getForEntity(ConstantHelper.POSTS_API_URL + "?userId=" + user.getId(), PostModel[].class);
 			posts = responsePosts.getBody();
@@ -70,7 +70,7 @@ public class CommentController {
 			}
 			return comments;
 		}
-		return comments;
+		return comments; //emtpy array in case of no name or userId given.
 	}
 	
 	/*First implementation of commentsFiltered. Not what was asked.*/

@@ -34,11 +34,7 @@ public class UserController {
 		UserModel user = restTemplate.getForObject(ConstantHelper.USERS_API_URL+id, UserModel.class);
 		return user;				
 	}
-	
-	
-
-
-	
+		
 	
 	
 }

@@ -1,7 +1,10 @@
 package com.gcontento.wchallenge.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PostModel {
 	private long id;
+	@JsonProperty("userId")
 	private long idUser;
 	private String title;
 	private String body;
